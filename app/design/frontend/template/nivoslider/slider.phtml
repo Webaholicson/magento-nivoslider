@@ -1,0 +1,41 @@
+<?php if ($nivoslider): 
+$slider = $nivoslider->getFirstItem();
+$slider_data = unserialize($slider->getSliderData());
+?>
+<div class="theme-default">
+    <div class="slider-<?php echo $slider->getId() ?>" id="slider-<?php echo $slider->getId() ?>">
+        <?php foreach($slider_data as $key => $slide): ?>
+        <a class="slide" href="<?php echo $slide['link'] ?>" title="<?php echo $slide['caption'] ?>">
+            <img src="<?php  echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'nivoslider/' . $slide['image'] ?>" />
+        </a>
+        <?php endforeach; ?>
+    </div>
+</div>
+<?php endif; ?>
+<script type="text/javascript">
+jQuery(document).ready(function($j) {
+    $j('#slider-<?php echo $slider->getId() ?>').nivoSlider({
+        effect: '<?php echo $slider->getEffect() ?>', // Specify sets like: 'fold,fade,sliceDown'
+        slices: <?php echo $slider->getSlices() ?>, // For slice animations
+        boxCols: <?php echo $slider->getBoxCols() ?>, // For box animations
+        boxRows: <?php echo $slider->getBoxRows() ?>, // For box animations
+        animSpeed: <?php echo $slider->getAnimationSpeed() ?>, // Slide transition speed
+        pauseTime: <?php echo $slider->getPauseTime() ?>, // How long each slide will show
+        startSlide: <?php echo $slider->getStartSlide() ?>, // Set starting Slide (0 index)
+        directionNav: <?php echo $slider->getDirectionNav() ?>, // Next & Prev navigation
+        directionNavHide: <?php echo $slider->getDirectionNavHide() ?>, // Only show on hover
+        controlNav: <?php echo $slider->getControlNav() ?>, // 1,2,3... navigation
+        controlNavThumbs: <?php echo $slider->getControlNavThumbs() ?>, // Use thumbnails for Control Nav
+        pauseOnHover: <?php echo $slider->getPauseOnHover() ?>, // Stop animation while hovering
+        manualAdvance: <?php echo $slider->getManualAdvance() ?>, // Force manual transitions
+        prevText: '<?php echo $slider->getPrevText() ?>', // Prev directionNav text
+        nextText: '<?php echo $slider->getNextText() ?>', // Next directionNav text
+        randomStart: <?php echo $slider->getRandomStart() ?>, // Start on a random slide
+        beforeChange: function(){}, // Triggers before a slide transition
+        afterChange: function(){}, // Triggers after a slide transition
+        slideshowEnd: function(){}, // Triggers after all slides have been shown
+        lastSlide: function(){}, // Triggers when last slide is shown
+        afterLoad: function(){} // Triggers when slider has loaded
+    });
+});
+</script>

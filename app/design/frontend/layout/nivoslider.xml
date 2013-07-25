@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default translate="label" module="nivoslider">
+        <reference name="head">
+            <action method="addJs"><name>jquery/jquery-1.8.2.min.js</name></action>
+            <action method="addJs"><name>jquery/jquery.nivo.slider.pack.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/nivo-slider.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/nivoslider-default.css</name></action>
+        </reference>
+    </default>
+</layout>

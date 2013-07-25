@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<widgets>
+	<nivoslider_widget type="nivoslider/widget" translate="name description" module="nivoslider">
+		<name>Nivoslider Widget</name>
+		<description>Add a slideshow in the page you want.</description>
+		<parameters>
+            <slider translate="label">
+                <label>Slider</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>select</type>
+                <sort_order>10</sort_order>
+                <source_model>nivoslider/widget_source_select</source_model>
+            </slider>
+        </parameters>
+	</nivoslider_widget>
+</widgets>

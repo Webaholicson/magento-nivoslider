@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <EWD_Nivoslider>
+            <version>0.1.0</version>
+        </EWD_Nivoslider>
+    </modules>
+    
+	<admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <EWD_Nivoslider before="Mage_Adminhtml">EWD_Nivoslider</EWD_Nivoslider>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+	
+    <frontend>
+    	<routers>
+            <nivoslider>
+                <use>standard</use>
+                <args>
+                    <module>EWD_Nivoslider</module>
+                    <frontName>nivoslider</frontName>
+                </args>
+            </nivoslider>
+        </routers>
+    	
+        <layout>
+            <updates>
+                <nivoslider module="EWD_Nivoslider">
+                    <file>nivoslider.xml</file>
+                </nivoslider>
+            </updates>
+        </layout>
+    </frontend>
+	
+    <adminhtml>
+		<menu>
+			<nivoslider translate="title" module="nivoslider">
+				<title>NivoSlider</title>
+				<sort_order>15</sort_order>
+				<children>
+					<sliders translate="title" module="nivoslider">
+						<title>Manage Sliders</title>
+						<action>nivoslider/adminhtml_nivoslider</action>
+						<sort_order>10</sort_order>
+					</sliders>
+				</children>
+			</nivoslider>
+		</menu>
+        <layout>
+            <updates>
+                <nivoslider>
+                    <file>nivoslider.xml</file>
+                </nivoslider>
+            </updates>
+        </layout>
+        
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <nivoslider>
+                            <title>NivoSlider</title>
+                            <children>
+                                <sliders translate="title" module="nivoslider">
+                                    <title>Manage Sliders</title>
+                                </sliders>
+                            </children>
+                        </nivoslider>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    
+    <global>
+    	<models>
+            <nivoslider>
+                <class>EWD_Nivoslider_Model</class>
+                <resourceModel>nivoslider_mysql4</resourceModel>
+            </nivoslider>
+            <nivoslider_mysql4>
+                <class>EWD_Nivoslider_Model_Mysql4</class>
+                <entities>
+                    <nivoslider>
+                        <table>nivoslider</table>
+                    </nivoslider>
+                </entities>
+            </nivoslider_mysql4>
+        </models>
+        
+        <resources>
+			<nivoslider_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</nivoslider_write>
+			<nivoslider_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</nivoslider_read> 
+            <nivoslider_setup>
+            	<connection>
+					<use>core_setup</use>
+           		</connection>
+                <setup>
+                    <module>EWD_Nivoslider</module>
+                </setup>
+            </nivoslider_setup>
+        </resources>
+        
+        <blocks>
+			<nivoslider>
+				<class>EWD_Nivoslider_Block</class>
+			</nivoslider>
+        </blocks>
+    	
+        <helpers>
+            <nivoslider>
+                <class>EWD_Nivoslider_Helper</class>
+            </nivoslider>
+        </helpers>
+    </global>
+</config>

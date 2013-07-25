@@ -1,0 +1,162 @@
+<div id="slides">
+<?php if ($slides):
+    $slide = $slides->getFirstItem();
+    $sliderData = unserialize($slide->getSliderData());
+    $lastId = array_pop(array_keys($sliderData));
+    foreach($sliderData as $count => $data):
+?>
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Slide') ?></h4>
+            <div class="form-buttons"></div>
+        </div>
+        <div class="fieldset" id="slider_slider">
+            <div class="hor-scroll">
+                <table cellspacing="0" class="form-list">
+                    <tbody>
+                        <tr>
+                            <td class="label">
+                                <label for="slide_image_<?php echo $count ?>"><?php echo $this->__('Image') ?></label>
+                            </td>
+                            <td class="value">
+                                <input id="slide_image_<?php echo $count ?>" name="slider_files[<?php echo $count ?>]" class="input-text" type="file" />
+                                <input id="slide_image_hidden_<?php echo $count ?>" name="slider_data[<?php echo $count ?>][image]" value="<?php echo $sliderData[$count]['image'] ?>" class="input-text" type="hidden" />
+                                <img style="margin-top: 5px;" width="280" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'nivoslider/' . $sliderData[$count]['image'] ?>" alt="<?php echo $sliderData[$count]['caption'] ?>" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                <label for="slide_caption_<?php echo $count ?>"><?php echo $this->__('Caption') ?></label>
+                            </td>
+                            <td class="value">
+                                <input id="slide_caption_<?php echo $count ?>" name="slider_data[<?php echo $count ?>][caption]" value="<?php echo $sliderData[$count]['caption'] ?>" class="input-text" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                <label for="slide_link_<?php echo $count ?>"><?php echo $this->__('Link') ?></label>
+                            </td>
+                            <td class="value">
+                                <input id="slide_link_<?php echo $count ?>" name="slider_data[<?php echo $count ?>][link]" value="<?php echo $sliderData[$count]['link'] ?>" class="input-text" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">&nbsp;</td>
+                            <td class="value">
+                                <?php echo $this->getDeleteButtonHtml() ?>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php endforeach; else: ?>
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Slide') ?></h4>
+            <div class="form-buttons"></div>
+        </div>
+        <div class="fieldset" id="poll_answer_fieldset_<?php echo $count ?>">
+            <div class="hor-scroll">
+                <table cellspacing="0" class="form-list">
+                    <tbody>
+                        <tr>
+                            <td class="label">
+                                <label for="slide_image_1"><?php echo $this->__('Image') ?></label>
+                            </td>
+                            <td class="value">
+                                <input id="slide_image_1" name="slider_files[1]" value="" class="required-entry input-text" type="file" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                <label for="slide_caption_1"><?php echo $this->__('Caption') ?></label>
+                            </td>
+                            <td class="value">
+                                <input id="slide_caption_1" name="slider_data[1][caption]" value="" class="input-text" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                <label for="slide_link_1"><?php echo $this->__('Link') ?></label>
+                            </td>
+                            <td class="value">
+                                <input id="slide_link_1" name="slider_data[1][link]" value="" class="input-text" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">&nbsp;</td>
+                            <td class="value">
+                                <?php echo $this->getDeleteButtonHtml() ?>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+</div>
+<div class="add-button">
+    <?php echo $this->getAddButtonHtml() ?>
+</div>
+
+<script type="text/javascript">
+    var lastId = <?php echo $lastId ? $lastId + 1 : 1 ?>;
+    var answer = function() {
+        return {
+            del : function(obj) {
+                if( confirm('<?php echo Mage::helper('nivoslider')->__('Are you sure you want to delete it?') ?>') ) {
+                    fieldSet = obj.up('div.fieldset');
+                    if( $('id_' + fieldSet.id) ) {
+                        var itemId = $('id_' + fieldSet.id).value;
+                        var newElement = document.createElement('input');
+                        newElement.type = 'hidden';
+                        newElement.value = itemId;
+                        newElement.name = 'deleteSlide[]';
+                        $('slides').appendChild(newElement);
+                    }
+                    fieldSet.remove();
+                }
+            },
+
+            add : function(obj) {
+                var newElement = document.createElement('div');
+                newElement.innerHTML = this.getTemplate();
+                $('slides').appendChild(newElement);
+            },
+
+            getTemplate : function() {
+                var id = this.createId();
+                return  '<div class="fieldset fieldset-wide" id="poll_answer_fieldset_' + id + '">'
+                    +'<table cellspacing="0" class="form-list">'
+                    +'<tr>'
+                    +    '<td class="label"><label for="slide_image_' + id + '"><?php echo Mage::helper('nivoslider')->__('Image') ?></label><\/td>'
+                    +    '<td class="value"><input type="file" id="slide_image_' + id + '" name="slider_files[' + id + ']" value="" class="input-text" /><\/td>'
+                    +'<\/tr>'
+                    +'<tr>'
+                    +    '<td class="label"><label for="slide_caption_' + id + '"><?php echo Mage::helper('nivoslider')->__('Caption') ?> </label><\/td>'
+                    +    '<td class="value"><input type="text" id="slide_caption_' + id + '" name="slider_data[' + id + '][caption]" value="" class="input-text" />'
+                    +'<\/td>'
+                    +'<\/tr>'
+                    +'<tr>'
+                    +    '<td class="label"><label for="slide_link_' + id + '"><?php echo Mage::helper('nivoslider')->__('Link:') ?> </label><\/td>'
+                    +    '<td class="value"><input type="text" id="slide_link_' + id + '" name="slider_data[' + id + '][link]" value="" class="input-text" />'
+                    +'<\/td>'
+                    +'<\/tr>'
+                    +'<tr>'
+                    +    '<td class="label"><\/td>'
+                    +    '<td class="value"><?php echo $this->getDeleteButtonHtml() ?><\/td>'
+                    +'<\/td>'
+                    +'<\/tr>'
+                    +'<\/table>'
+                    +'<\/div>';
+            },
+
+            createId : function () {
+                return lastId++;
+            }
+        }
+    }();
+</script>
